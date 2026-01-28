@@ -1,63 +1,32 @@
-# 40173148-resume
+# Resume Website (FastAPI)
 
-# تمرین ساخت رزومه با HTML و CSS
+Features:
+- Resume page (index) with email and short skills blurb (Kotlin programmer).
+- Project request form page that stores requests in SQLite.
+- Admin login (JWT-based) and admin requests page to view stored requests.
+- WebSocket endpoint broadcasting number of online visitors in real time.
 
-این پروژه شامل رزومه‌ی شخصی در قالب یک صفحه‌ی وب است.  
-در مرحله‌ی اول رزومه فقط با **HTML** و تگ‌های معنایی ساخته شد، و در این مرحله با استفاده از **CSS در یک فایل جداگانه** طراحی و خواناتر شده است.
+Requirements:
+- Python 3.10+
+- Install dependencies:
+  pip install -r requirements.txt
 
----
+Run:
+- export (or set) environment variables to secure the admin credentials and secret key:
+  - SECRET_KEY (recommended)
+  - ADMIN_USERNAME (default: "admin")
+  - ADMIN_PASSWORD (default: "adminpass")
+- Start server:
+  uvicorn app.main:app --reload
 
-## ساختار پروژه
+Pages:
+- http://localhost:8000/          -> Resume
+- http://localhost:8000/request   -> Project request form
+- http://localhost:8000/admin/login -> Admin login
+- http://localhost:8000/admin/requests -> Admin requests (requires login)
 
-index.html ← ساختار اصلی رزومه
-style.css ← فایل استایل و طراحی صفحه
+Notes:
+- For production, change SECRET_KEY and ADMIN_* variables. Consider using hashed passwords and a proper user store.
+- This scaffold uses simple server-side JWT and an in-memory WebSocket connection manager. For horizontal scaling use a Redis-based pub/sub or a central WebSocket manager.
 
-markdown
-Copy code
-
----
-
-## بخش‌های موجود در رزومه
-
-1. نام و اطلاعات تماس
-2. معرفی کوتاه
-3. تحصیلات
-4. تجربه‌ها و پروژه‌ها
-5. مهارت‌ها
-
-در فایل HTML از تگ‌های معنایی زیر استفاده شده است:
-
-- `<header>`
-- `<section>`
-- `<article>`
-- `<footer>`
-
-و جهت نمایش صحیح متن فارسی:
-
-```html
-<html lang="fa" dir="rtl">
-توضیحات مربوط به CSS
-فایل style.css به صورت جداگانه نوشته شده.
-
-طراحی بر اساس سبک Material Design انجام شده است.
-
-از سایه‌ها، فاصله‌گذاری مناسب و رنگ‌بندی خوانا استفاده شده است.
-
-فایل CSS با دستور زیر به HTML متصل شده است:
-
-html
-Copy code
-<link rel="stylesheet" href="style.css">
-نحوه مشاهده رزومه
-فقط کافی است فایل index.html را در مرورگر باز کنید.
-
-هدف تمرین
-جداسازی ساختار (HTML) از نمایش (CSS)
-
-استفاده از تگ‌های معنایی در HTML5
-
-بهبود خوانایی و تجربه کاربری
-
-تمرین commit و push در Git
-
-ساخته شده توسط: اسماعیل علوانی
+End of files.

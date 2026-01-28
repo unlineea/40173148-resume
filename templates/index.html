@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Resume - Daniel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="brand">
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a href="/" aria-current="page">Resume</a>
+        <a href="/request">Request a Project</a>
+        <a href="/admin/login">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid">
+      <section class="card hero">
+        <div class="card__inner">
+          <p class="hero__kicker">Android-flavored polish, web-speed delivery.</p>
+          <h1 class="hero__headline">Kotlin Developer building clean apps & rock-solid APIs.</h1>
+          <p class="card__subtitle">
+            Hello — I'm a Kotlin programmer. I build Android apps and server-side components in Kotlin.
+          </p>
+
+          <div class="chips" aria-label="Highlights">
+            <a class="chip" href="/request">Start a project</a>
+            <a class="chip" href="mailto:esmailalvani@gmail.com">Email me</a>
+            <span class="badge" title="Live viewers">
+              <span class="badge__dot" aria-hidden="true"></span>
+              Online: <strong id="online-count">0</strong>
+            </span>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="card__title">Skills</h2>
+          <p class="card__subtitle">A few things I ship with confidence:</p>
+          <div class="chips">
+            <span class="chip">Kotlin (Android, Ktor)</span>
+            <span class="chip">REST APIs</span>
+            <span class="chip">SQL / SQLite</span>
+            <span class="chip">Unit testing & CI</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card card--soft">
+        <div class="card__inner">
+          <h2 class="card__title">Contact</h2>
+          <p class="card__subtitle">Fastest way to reach me:</p>
+          <div class="divider"></div>
+          <p style="margin:0 0 12px;color:rgba(255,255,255,.82)">
+            <strong>Email</strong><br />
+            <a href="mailto:esmailalvani@gmail.com">esmailalvani@gmail.com</a>
+          </p>
+          <div class="row">
+            <a class="btn btn-primary" href="/request">Request a Project</a>
+            <a class="btn btn-ghost" href="/admin/login">Admin</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Built with FastAPI + SQLite. Material-inspired UI.
+  </footer>
+
+  <script>
+    const ws = new WebSocket((location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/ws/online");
+    const countEl = document.getElementById("online-count");
+    ws.onmessage = (evt) => {
+      try {
+        const data = JSON.parse(evt.data);
+        if (data && typeof data.online === "number") {
+          countEl.innerText = data.online;
+        }
+      } catch (e) { /* ignore */ }
+    };
+    ws.onopen = () => { /* connected */ };
+    ws.onclose = () => { /* closed */ };
+    // send a heartbeat message to keep connection alive
+    setInterval(() => { if (ws.readyState === WebSocket.OPEN) ws.send("ping"); }, 20000);
+  </script>
+</body>
+</html>
