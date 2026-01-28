@@ -138,3 +138,11 @@ async def websocket_online(websocket: WebSocket):
     except Exception:
         manager.disconnect(websocket)
         await manager.broadcast_count()
+
+# Note: For production deployment on Liara, use: uvicorn main:app --host 0.0.0.0 --port 80
+# This block is used when Liara runs python3 main.py (fallback)
+if __name__ == "__main__":
+    import uvicorn
+    # Use PORT from environment (Liara sets this to 80) or default to 80 for production
+    port = int(os.getenv("PORT", 80))
+    uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
